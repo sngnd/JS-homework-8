@@ -12,14 +12,18 @@ sendBtn.addEventListener("click", (event) => {
 const closeBtn = document.querySelector("#closeBtn");
 closeBtn.addEventListener("click", () => {
     popup.style.display = "none";
+    const error = document.querySelector("#name__error");
+    error.style.display = "none";
+    const name = document.querySelector("#name");
+    name.style.border = "1px solid #ccc";
 });
 
 function checkInput() {
     const name = document.querySelector("#name");
     if (name.value === " " || name.value === "") {
         name.style.border = "1px solid red";
+        const error = document.querySelector("#name__error");
 
-        error = document.querySelector("#name__error");
         error.style.display = "block";
 
         return false;

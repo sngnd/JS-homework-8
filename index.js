@@ -34,16 +34,18 @@ function displayPopup() {
 
 function fillFields() {
     const name = document.querySelector("#name").value;
-    document.querySelector("#result__name").innerHTML += `<p>${name}<\p>`;
+    document.querySelector("#result__name").innerHTML = name;
+
     const birthDate = document.querySelector("#birthDate").value;
-    document.querySelector("#result__date").innerHTML += `<p>${birthDate}<\p>`;
+    document.querySelector("#result__date").innerHTML = birthDate;
+
     const age = document.querySelector("#age").value;
-    document.querySelector("#result__age").innerHTML += `<p>${age}<\p>`;
+    document.querySelector("#result__age").innerHTML = age;
+
     const educationSelect = document.querySelector("#education");
     const education = educationSelect.options[educationSelect.selectedIndex].text;
-    document.querySelector(
-        "#result__education"
-    ).innerHTML += `<p>${education}<\p>`;
+    document.querySelector("#result__education").innerHTML = education;
+
     const genderRadio = document.getElementsByName("gender");
     let gender;
     for (let i = 0; i < genderRadio.length; i++) {
@@ -52,5 +54,5 @@ function fillFields() {
             break;
         }
     }
-    document.querySelector("#result__gender").innerHTML += `<p>${gender}<\p>`;
+    document.querySelector("#result__gender").innerHTML = gender;
 }

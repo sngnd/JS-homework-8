@@ -1,27 +1,20 @@
 const popup = document.querySelector(".popup");
-
+const form = document.querySelector("#form");
 const sendBtn = document.querySelector("#sendBtn");
-sendBtn.addEventListener("click", (event) => {
-    event.preventDefault();
-    if (checkInput()) {
-        fillFields();
-        displayPopup();
-    }
-});
-
 const closeBtn = document.querySelector("#closeBtn");
-closeBtn.addEventListener("click", () => {
-    popup.style.display = "none";
-    const error = document.querySelector("#name__error");
-    error.style.display = "none";
-    const name = document.querySelector("#name");
-    name.style.border = "1px solid #ccc";
-});
 
-function checkInput() {
-    const name = document.querySelector("#name");
-    if (name.value === " " || name.value === "") {
-        name.style.border = "1px solid red";
+const closePopup = () => {
+    const nameField = document.querySelector("#name");
+    const error = document.querySelector("#name__error");
+    form.reset();
+    error.style.display = "none";
+    nameField.style.border = "1px solid #ccc";
+    popup.style.display = "none";
+};
+
+const checkName = (nameInput) => {
+    if (nameInput.value === " " || nameInput.value === "") {
+        nameInput.style.border = "1px solid red";
         const error = document.querySelector("#name__error");
 
         error.style.display = "block";
@@ -30,27 +23,33 @@ function checkInput() {
     }
 
     return true;
-}
+};
 
-function displayPopup() {
+age.addEventListener("input", function(event) {
+    if (/[^0-9]/.test(this.value)) {
+        age.style.border = "1px solid red";
+    } else {
+        age.style.border = "1px solid green";
+    }
+});
+
+const displayPopup = () => {
     popup.style.display = "block";
-}
+};
 
-function fillFields() {
-    const name = document.querySelector("#name").value;
-    document.querySelector("#result__name").innerHTML = name;
+const fillFields = (age, name) => {
+    document.querySelector("#result__name").innerHTML = name.value;
 
-    const birthDate = document.querySelector("#birthDate").value;
-    document.querySelector("#result__date").innerHTML = birthDate;
+    const birthDate = document.querySelector("#birthDate"); // get birth value
+    document.querySelector("#result__date").innerHTML = birthDate.value;
 
-    const age = document.querySelector("#age").value;
-    document.querySelector("#result__age").innerHTML = age;
+    document.querySelector("#result__age").innerHTML = age.value;
 
-    const educationSelect = document.querySelector("#education");
+    const educationSelect = document.querySelector("#education"); // get education value
     const education = educationSelect.options[educationSelect.selectedIndex].text;
     document.querySelector("#result__education").innerHTML = education;
 
-    const genderRadio = document.getElementsByName("gender");
+    const genderRadio = document.getElementsByName("gender"); // get checked gender
     let gender;
     for (let i = 0; i < genderRadio.length; i++) {
         if (genderRadio[i].checked) {
@@ -59,4 +58,31 @@ function fillFields() {
         }
     }
     document.querySelector("#result__gender").innerHTML = gender;
-}
+};
+
+sendBtn.addEventListener("click", (event) => {
+    event.preventDefault();
+
+    const name = document.querySelector("#name"); // get name value
+    const age = document.querySelector("#age"); // get age value
+
+    if (
+        checkName(name) &&
+        age.style.border == "1px solid green" &&
+        age.value != ""
+    ) {
+        age.style.border = "1px solid #ccc";
+        fillFields(age, name);
+        displayPopup();
+    }
+});
+
+closeBtn.addEventListener("click", () => {
+    closePopup();
+});
+
+popup.addEventListener("click", (event) => {
+    if (!event.target.closest(".popup__content")) {
+        closePopup();
+    }
+});
